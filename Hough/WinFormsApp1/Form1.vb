@@ -115,22 +115,13 @@ Public Class Form1
 
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-
-
-
         If intermedia Is Nothing Then
             Exit Sub
         End If
         Dim analizar As Bitmap = copiarImagen(intermedia)
-
-
-
         Dim x1, x2, x3, x4 As Integer
-
         Dim y1, y2, y3, y4 As Integer
-
         Dim ancho, alto As Integer
-
         ancho = analizar.Width - 1
         alto = analizar.Height - 1
 
@@ -251,7 +242,6 @@ Public Class Form1
         txtDiametro.Text = diamPromedio
         txtEspesor.Text = anchopincelpromedio
 
-
         Dim graphics As Graphics = Graphics.FromImage(analizar)
         graphics.SmoothingMode = SmoothingMode.AntiAlias
         Dim pen As New Pen(Color.LightCoral, anchopincelpromedio)
@@ -266,14 +256,10 @@ Public Class Form1
 
         imgIntermedia.Image = intermedia
         imgIntermedia.Invalidate()
-
-
     End Sub
 
     Private Sub btnDetectarLineas_Click(sender As Object, e As EventArgs) Handles btnDetectarLineas.Click
         Try
-
-
             destino = copiarImagen(intermedia)
             imgSalida.Image = destino
             Dim diametro As Integer = CInt(txtDiametro.Text)
@@ -307,9 +293,7 @@ Public Class Form1
                     End If
                     Dim pen As New Pen(Color.LightCoral, 2)
                     graphics.DrawLine(pen, x1, y1, x2, y2)
-
                 End If
-
             Next
             imgSalida.Image = destino
             imgSalida.Invalidate()

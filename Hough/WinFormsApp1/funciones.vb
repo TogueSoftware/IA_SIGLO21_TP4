@@ -1,8 +1,6 @@
 ﻿Imports System.Drawing.Drawing2D
 
 Module funciones
-
-
     Public progreso As Integer = 0
 
     Public Function convertirBinario(image As Bitmap) As Bitmap
@@ -48,7 +46,6 @@ Module funciones
                         Dim cleanedColor As Color = If(claro, Color.White, Color.Black)
                         imagenLimpia.SetPixel(x, y, cleanedColor)
 
-
                         'análisis de pixeles circundantes en forma de +
                         p1 = image.GetPixel(x - 1, y)
                         p2 = image.GetPixel(x + 1, y)
@@ -90,7 +87,7 @@ Module funciones
             Return imagenCopia
         Catch
         End Try
-
+        Return Nothing
     End Function
 
 

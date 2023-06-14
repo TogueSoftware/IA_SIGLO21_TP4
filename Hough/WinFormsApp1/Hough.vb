@@ -20,9 +20,7 @@ Public Class Hough
         ' Crear un acumulador para almacenar los votos de las líneas detectadas
         Dim acumulador As New Dictionary(Of String, Integer)()
         Dim distanciaMAX As Integer = CInt(ancho * Cos(0.25 * PI) + alto * Sin(0.25 * PI))
-
         Dim distanciasGrupos As Integer()
-
 
         Dim cantidadGruposDistancia As Integer = 300
 
@@ -38,11 +36,9 @@ Public Class Hough
             End Try
         Next
 
-
         Dim minDistancia = 9999
         Dim maxDistancia = -9999
         Dim str As String
-
         ' Bucle para recorrer todos los píxeles de la imagen
         For x As Integer = 0 To ancho - 1
             progreso = x
@@ -58,11 +54,8 @@ Public Class Hough
                     ' Bucle para generar todas las posibles líneas
                     Dim ang As Double = 0
                     For angulo As Double = 0 To PI Step PI / 180 ' 1 grado de precisión
-
-                        ang = CInt(angulo * 10) / 10
+                        ang = CInt(angulo * 100) / 100
                         Dim distancia As Integer = CInt(x * Math.Cos(ang) + y * Math.Sin(ang))
-
-
                         For ii = 1 To distanciasGrupos.Length - 1
                             '     'agrupador de distancias
                             If distancia >= distanciasGrupos(ii - 1) And distancia <= distanciasGrupos(ii) Then
@@ -70,102 +63,23 @@ Public Class Hough
                                 Exit For
                             End If
                         Next
-
                         If distancia < minDistancia Then
-                                minDistancia = distancia
-                            End If
-                            If distancia > maxDistancia Then
-                                maxDistancia = distancia
-                            End If
-
-                            str = ang & " " & distancia
-                            ' Incrementar el contador del círculo detectado en el acumulador
-                            If acumulador.ContainsKey(str) Then
-                                acumulador(str) += 1
-                            Else
-                                acumulador(str) = 1
-                            End If
-                            ' Crear una línea con el ángulo y rho calculados
-                            'Dim line As New Linea(angulo, distancia)
-                            ' Incrementar el contador de la línea detectada en el acumulador
-                        Next
+                            minDistancia = distancia
+                        End If
+                        If distancia > maxDistancia Then
+                            maxDistancia = distancia
+                        End If
+                        str = ang & " " & distancia
+                        ' Incrementar el contador del círculo detectado en el acumulador
+                        If acumulador.ContainsKey(str) Then
+                            acumulador(str) += 1
+                        Else
+                            acumulador(str) = 1
+                        End If
+                    Next
                 End If
             Next
         Next
-
-        ' Filtrar las líneas detectadas según los 5 más votados
-
-        'agrupacion por angulos y distancias
-
-
-
-
-        '  ReDim distanciasGrupos(cantidadGruposDistancia)
-        '  ReDim angulosGrupos(cantidadGruposAngulos)
-        '  Dim a As Integer = 0
-        '  For ii = minDistancia To maxDistancia Step CInt((maxDistancia - minDistancia) / cantidadGruposDistancia)
-        '  Try
-        '  distanciasGrupos(a) = ii
-        '
-        '        a += 1
-        '        Catch
-        '        End Try
-        '        Next
-
-        '        a = 0
-        '        For angulo As Double = 0 To PI Step (PI / cantidadGruposAngulos)
-        '        Try
-        '        angulosGrupos(a) = angulo
-        '        '  Debug.Print("B " & a & " angulo " & angulo)
-        '        a += 1
-        '        Catch
-        '        End Try
-        '        Next
-
-        Debug.Print("obteniendo maximos")
-
-        Dim dist As Integer
-
-        'reagrupacion por distancia
-        Dim acumulador2 As New Dictionary(Of String, Integer)()
-
-        For Each clave In acumulador.Keys
-            If acumulador(clave) > 1 Then
-                Dim split As String() = clave.Split(" "c)
-                Dim angulo As Double = CDbl(split(0))
-                dist = CInt(split(1))
-
-                '     For ii = 1 To distanciasGrupos.Length - 1
-                '     'agrupador de distancias
-                '     If dist >= distanciasGrupos(ii - 1) And dist <= distanciasGrupos(ii) Then
-                '     dist = distanciasGrupos(ii)
-                '     Exit For
-                ' End If
-                ' Next
-
-                '          For ii = 1 To angulosGrupos.Length - 1
-                '          'agrupador de angulos
-                '          If angulo >= angulosGrupos(ii - 1) And angulo <= angulosGrupos(ii) Then
-                '          angulo = angulosGrupos(ii)
-                '          Exit For
-                '      End If
-                '  Next
-
-                str = angulo & " " & dist
-
-                        If acumulador2.ContainsKey(str) Then
-                            acumulador2(str) += 1
-
-                        Else
-                            acumulador2(str) = 1
-                        End If
-                    End If
-
-                Next
-
-        Debug.Print("Acumulador 1 tiene " & acumulador.Count)
-        Debug.Print("Acumulador 2 tiene " & acumulador2.Count)
-
 
         Dim votos() As Integer = {0, 0, 0, 0, 0}
         Dim claves() As String = {"", "", "", "", ""}
