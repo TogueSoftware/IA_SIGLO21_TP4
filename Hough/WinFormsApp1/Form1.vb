@@ -53,13 +53,19 @@ Public Class Form1
 
 
 
-    Private Sub btnDetectarPatron_click(sender As Object, e As EventArgs) Handles btnDetectarPatron.Click
+    Private Sub btnDetectarPatron_click(sender As Object, e As EventArgs) Handles btnDetectarAnillo.Click
         Try
 
             If CInt(txtDiametro.Text) = 0 Then
                 MsgBox("Debe cargar una imagen como patron, o poner los parametros correspondientes", vbCritical)
                 Exit Sub
             End If
+
+            If intermedia Is Nothing Then
+                MsgBox("Debe cargar una imagen como patron, o poner los parametros correspondientes", vbCritical)
+                Exit Sub
+            End If
+
 
             destino = copiarImagen(intermedia)
             imgSalida.Image = destino
@@ -111,6 +117,10 @@ Public Class Form1
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
 
 
+
+        If intermedia Is Nothing Then
+            Exit Sub
+        End If
         Dim analizar As Bitmap = copiarImagen(intermedia)
 
 
@@ -260,9 +270,59 @@ Public Class Form1
 
     End Sub
 
+    Private Sub btnDetectarLineas_Click(sender As Object, e As EventArgs) Handles btnDetectarLineas.Click
+        Try
 
 
+            destino = copiarImagen(intermedia)
+            imgSalida.Image = destino
+            Dim diametro As Integer = CInt(txtDiametro.Text)
+            Dim procesa As Bitmap = copiarImagen(intermedia)
+            Dim houghDetection As New Hough(procesa)
+            ProgressBar1.Maximum = intermedia.Width
+            ProgressBar1.Value = 0
+            progresoTimer.Enabled = True
+            Dim lineasDetectadas As List(Of Linea) = houghDetection.detectarLineas
+            Dim detectada As Boolean = False
 
+            For Each lin In lineasDetectadas
 
+                If lin.distancia > -9999999 Then
+                    detectada = True
+                    Dim graphics As Graphics = Graphics.FromImage(destino)
+                    Dim angulo As Double = lin.angulo
+                    Dim distancia As Integer = lin.distancia
+                    Dim x1, y1, x2, y2 As Integer
+                    Debug.Print("Dibujando " & lin.angulo & " seno " & Math.Abs(Math.Sin(angulo)) & " distancia " & lin.distancia)
+                    If Math.Abs(Math.Sin(angulo)) < 0.0001 Then ' Línea vertical
+                        x1 = CInt(distancia)
+                        y1 = 0
+                        x2 = CInt(distancia)
+                        y2 = destino.Height
+                    Else
+                        x1 = 0
+                        y1 = CInt(distancia / Math.Sin(angulo))
+                        x2 = destino.Width
+                        y2 = CInt((distancia - x2 * Math.Cos(angulo)) / Math.Sin(angulo))
+                    End If
+                    Dim pen As New Pen(Color.LightCoral, 2)
+                    graphics.DrawLine(pen, x1, y1, x2, y2)
+
+                End If
+
+            Next
+            imgSalida.Image = destino
+            imgSalida.Invalidate()
+
+            If Not detectada Then
+                MsgBox("No se han detectado lineas")
+            End If
+
+        Catch ex As Exception
+            MsgBox("Error al procesar " & ex.ToString)
+        End Try
+        ProgressBar1.Value = ProgressBar1.Maximum
+        progresoTimer.Enabled = False
+    End Sub
 End Class
 

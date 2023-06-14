@@ -25,7 +25,7 @@ Partial Class Form1
         components = New ComponentModel.Container()
         Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(Form1))
         ProgressBar1 = New ProgressBar()
-        btnDetectarPatron = New Button()
+        btnDetectarAnillo = New Button()
         Label3 = New Label()
         Label2 = New Label()
         Label1 = New Label()
@@ -41,6 +41,7 @@ Partial Class Form1
         txtEspesor = New TextBox()
         CheckBox1 = New CheckBox()
         Label5 = New Label()
+        btnDetectarLineas = New Button()
         CType(imgSalida, ComponentModel.ISupportInitialize).BeginInit()
         CType(imgIntermedia, ComponentModel.ISupportInitialize).BeginInit()
         CType(imgEntrada, ComponentModel.ISupportInitialize).BeginInit()
@@ -53,14 +54,14 @@ Partial Class Form1
         ProgressBar1.Size = New Size(281, 10)
         ProgressBar1.TabIndex = 33
         ' 
-        ' btnDetectarPatron
+        ' btnDetectarAnillo
         ' 
-        btnDetectarPatron.Location = New Point(652, 375)
-        btnDetectarPatron.Name = "btnDetectarPatron"
-        btnDetectarPatron.Size = New Size(219, 23)
-        btnDetectarPatron.TabIndex = 28
-        btnDetectarPatron.Text = "Detectar anillo"
-        btnDetectarPatron.UseVisualStyleBackColor = True
+        btnDetectarAnillo.Location = New Point(652, 385)
+        btnDetectarAnillo.Name = "btnDetectarAnillo"
+        btnDetectarAnillo.Size = New Size(219, 23)
+        btnDetectarAnillo.TabIndex = 28
+        btnDetectarAnillo.Text = "Detectar anillo"
+        btnDetectarAnillo.UseVisualStyleBackColor = True
         ' 
         ' Label3
         ' 
@@ -91,7 +92,7 @@ Partial Class Form1
         ' 
         ' btnCargarImagen
         ' 
-        btnCargarImagen.Location = New Point(113, 364)
+        btnCargarImagen.Location = New Point(102, 364)
         btnCargarImagen.Name = "btnCargarImagen"
         btnCargarImagen.Size = New Size(125, 23)
         btnCargarImagen.TabIndex = 24
@@ -152,9 +153,9 @@ Partial Class Form1
         ' 
         ' Button2
         ' 
-        Button2.Location = New Point(113, 415)
+        Button2.Location = New Point(57, 415)
         Button2.Name = "Button2"
-        Button2.Size = New Size(125, 23)
+        Button2.Size = New Size(213, 23)
         Button2.TabIndex = 43
         Button2.Text = "Tomar parametros de esta imagen"
         Button2.UseVisualStyleBackColor = True
@@ -182,7 +183,7 @@ Partial Class Form1
         CheckBox1.AutoSize = True
         CheckBox1.Checked = True
         CheckBox1.CheckState = CheckState.Checked
-        CheckBox1.Location = New Point(102, 390)
+        CheckBox1.Location = New Point(90, 390)
         CheckBox1.Name = "CheckBox1"
         CheckBox1.Size = New Size(157, 19)
         CheckBox1.TabIndex = 46
@@ -199,11 +200,21 @@ Partial Class Form1
         Label5.TabIndex = 47
         Label5.Text = "Parámetros del anillo"
         ' 
+        ' btnDetectarLineas
+        ' 
+        btnDetectarLineas.Location = New Point(652, 419)
+        btnDetectarLineas.Name = "btnDetectarLineas"
+        btnDetectarLineas.Size = New Size(219, 23)
+        btnDetectarLineas.TabIndex = 48
+        btnDetectarLineas.Text = "Detectar 5  lineas"
+        btnDetectarLineas.UseVisualStyleBackColor = True
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(966, 476)
+        Controls.Add(btnDetectarLineas)
         Controls.Add(Label5)
         Controls.Add(CheckBox1)
         Controls.Add(Label6)
@@ -213,7 +224,7 @@ Partial Class Form1
         Controls.Add(txtDiametro)
         Controls.Add(imgEntrada)
         Controls.Add(ProgressBar1)
-        Controls.Add(btnDetectarPatron)
+        Controls.Add(btnDetectarAnillo)
         Controls.Add(Label3)
         Controls.Add(Label2)
         Controls.Add(Label1)
@@ -230,7 +241,7 @@ Partial Class Form1
         PerformLayout()
     End Sub
     Friend WithEvents ProgressBar1 As ProgressBar
-    Friend WithEvents btnDetectarPatron As Button
+    Friend WithEvents btnDetectarAnillo As Button
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
@@ -246,4 +257,5 @@ Partial Class Form1
     Friend WithEvents txtEspesor As TextBox
     Friend WithEvents CheckBox1 As CheckBox
     Friend WithEvents Label5 As Label
+    Friend WithEvents btnDetectarLineas As Button
 End Class
