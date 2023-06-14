@@ -4,7 +4,6 @@ Imports System.Math
 Imports Microsoft.VisualBasic.Devices
 
 Public Class Hough
-
     Private imagenProcesar As Bitmap
 
     Public Sub New(ByVal imagen As Bitmap)
@@ -21,10 +20,8 @@ Public Class Hough
         Dim acumulador As New Dictionary(Of String, Integer)()
         Dim distanciaMAX As Integer = CInt(ancho * Cos(0.25 * PI) + alto * Sin(0.25 * PI))
         Dim distanciasGrupos As Integer()
-
         Dim cantidadGruposDistancia As Integer = 300
 
-        Debug.Print("salto cada " & CInt((distanciaMAX * 2) / cantidadGruposDistancia))
         ReDim distanciasGrupos(cantidadGruposDistancia)
 
         Dim a As Integer = 0
@@ -109,7 +106,6 @@ Public Class Hough
         Debug.Print("obteniendo maximo 3 " & votos(3) & " clave " & claves(3))
         Debug.Print("obteniendo maximo 4 " & votos(4) & " clave " & claves(4))
 
-
         'armado de resultado
         Dim lineasDetectadas As New List(Of Linea)()
 
@@ -124,7 +120,6 @@ Public Class Hough
         Next
 
 
-        Debug.Print("saliendo")
         Return lineasDetectadas
     End Function
 
@@ -132,8 +127,6 @@ Public Class Hough
     Public Function DetectarCirculos(diametro As Integer, tolerancia As Integer) As Circulo
         Dim ancho As Integer = imagenProcesar.Width
         Dim alto As Integer = imagenProcesar.Height
-
-
 
         ' Calcular el radio y la tolerancia correspondientes al diámetro y la tolerancia proporcionados
         Dim radio As Integer = diametro \ 2
@@ -183,7 +176,7 @@ Public Class Hough
                                 Else
                                     acumulador(str) = 1
                                 End If
-                                '  Debug.Print("circulo encontrado en " & centerX & " , " & centerY & " acumulador " & accumulator(circle) & " posible encontrado " & possibleRadius)
+
                             End If
                         End If
 
@@ -195,9 +188,7 @@ Public Class Hough
         Next
 
         ' Filtrar los círculos detectados según el umbral dado
-
         Dim circulosDetectados As New Circulo
-
         Dim max As Integer = 1
         Dim mejorClave As String = ""
         For Each clave In acumulador.Keys
@@ -214,9 +205,6 @@ Public Class Hough
 
             circulosDetectados = New Circulo(x, y, radio)
         End If
-
-
-
 
         Return circulosDetectados
     End Function
