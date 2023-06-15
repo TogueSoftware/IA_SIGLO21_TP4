@@ -21,9 +21,7 @@ Public Class Hough
         Dim distanciaMAX As Integer = CInt(ancho * Cos(0.25 * PI) + alto * Sin(0.25 * PI))
         Dim distanciasGrupos As Integer()
         Dim cantidadGruposDistancia As Integer = 300
-
         ReDim distanciasGrupos(cantidadGruposDistancia)
-
         Dim a As Integer = 0
         For ii = -distanciaMAX To distanciaMAX Step CInt((distanciaMAX * 2) / cantidadGruposDistancia)
             Try
@@ -33,8 +31,6 @@ Public Class Hough
             End Try
         Next
 
-        Dim minDistancia = 9999
-        Dim maxDistancia = -9999
         Dim str As String
         ' Bucle para recorrer todos los píxeles de la imagen
         For x As Integer = 0 To ancho - 1
@@ -60,12 +56,6 @@ Public Class Hough
                                 Exit For
                             End If
                         Next
-                        If distancia < minDistancia Then
-                            minDistancia = distancia
-                        End If
-                        If distancia > maxDistancia Then
-                            maxDistancia = distancia
-                        End If
                         str = ang & " " & distancia
                         ' Incrementar el contador del círculo detectado en el acumulador
                         If acumulador.ContainsKey(str) Then
